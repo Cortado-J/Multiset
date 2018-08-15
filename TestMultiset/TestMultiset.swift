@@ -2,8 +2,7 @@
 //  MultisetTest.swift
 //  MultisetTest
 //
-//  Created by Suhada on 26/07/2018.
-//  Copyright © 2018 Suhada. All rights reserved.
+//  Created by Adahus on 26/07/2018.
 //
 
 import XCTest

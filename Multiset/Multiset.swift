@@ -2,7 +2,7 @@
 //  Multiset.swift
 //  Multiset
 //
-//  Created by Justin Roughley on 26/07/2018.
+//  Created by Adahus on 26/07/2018.
 //
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
