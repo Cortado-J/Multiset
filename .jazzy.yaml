@@ -1,0 +1,10 @@
+author: Adahus
+author_url: https://github.com/Adahus
+github_url: https://github.com/Adahus/Multiset
+module: Multiset
+readme: README.md
+output: docs
+theme: apple
+clean: true
+//skip_undocumented: true
+//xcodebuild_arguments: [-workspace, 'Multiset.xcworkspace', -scheme, 'Multiset', -sdk, 'iphonesimulator']

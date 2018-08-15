@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC948DBC212050FF0048BA4F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DBB212050FF0048BA4F /* main.swift */; };
+		BC7970A82121E2C1009B0378 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7970A72121E2C1009B0378 /* main.swift */; };
+		BC7970A92121E303009B0378 /* Multiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DC2212051450048BA4F /* Multiset.swift */; };
+		BC948DC3212051450048BA4F /* Multiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DC2212051450048BA4F /* Multiset.swift */; };
+		BC948DCB212052E60048BA4F /* TestMultiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DCA212052E60048BA4F /* TestMultiset.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,12 +26,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BC7970A72121E2C1009B0378 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		BC948DB8212050FF0048BA4F /* Multiset */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Multiset; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC948DBB212050FF0048BA4F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		BC948DC2212051450048BA4F /* Multiset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiset.swift; sourceTree = "<group>"; };
+		BC948DC8212052E60048BA4F /* TestMultiset.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestMultiset.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC948DCA212052E60048BA4F /* TestMultiset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMultiset.swift; sourceTree = "<group>"; };
+		BC948DCC212052E60048BA4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BC948DB5212050FF0048BA4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC948DC5212052E60048BA4F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				BC948DBA212050FF0048BA4F /* Multiset */,
+				BC948DC9212052E60048BA4F /* TestMultiset */,
 				BC948DB9212050FF0048BA4F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				BC948DB8212050FF0048BA4F /* Multiset */,
+				BC948DC8212052E60048BA4F /* TestMultiset.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +73,19 @@
 		BC948DBA212050FF0048BA4F /* Multiset */ = {
 			isa = PBXGroup;
 			children = (
-				BC948DBB212050FF0048BA4F /* main.swift */,
+				BC7970A72121E2C1009B0378 /* main.swift */,
+				BC948DC2212051450048BA4F /* Multiset.swift */,
 			);
 			path = Multiset;
+			sourceTree = "<group>";
+		};
+		BC948DC9212052E60048BA4F /* TestMultiset */ = {
+			isa = PBXGroup;
+			children = (
+				BC948DCA212052E60048BA4F /* TestMultiset.swift */,
+				BC948DCC212052E60048BA4F /* Info.plist */,
+			);
+			path = TestMultiset;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +108,23 @@
 			productReference = BC948DB8212050FF0048BA4F /* Multiset */;
 			productType = "com.apple.product-type.tool";
 		};
+		BC948DC7212052E60048BA4F /* TestMultiset */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC948DCD212052E60048BA4F /* Build configuration list for PBXNativeTarget "TestMultiset" */;
+			buildPhases = (
+				BC948DC4212052E60048BA4F /* Sources */,
+				BC948DC5212052E60048BA4F /* Frameworks */,
+				BC948DC6212052E60048BA4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestMultiset;
+			productName = TestMultiset;
+			productReference = BC948DC8212052E60048BA4F /* TestMultiset.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +136,9 @@
 				ORGANIZATIONNAME = Suhada;
 				TargetAttributes = {
 					BC948DB7212050FF0048BA4F = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					BC948DC7212052E60048BA4F = {
 						CreatedOnToolsVersion = 10.0;
 					};
 				};
@@ -110,16 +156,37 @@
 			projectRoot = "";
 			targets = (
 				BC948DB7212050FF0048BA4F /* Multiset */,
+				BC948DC7212052E60048BA4F /* TestMultiset */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BC948DC6212052E60048BA4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BC948DB4212050FF0048BA4F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC948DBC212050FF0048BA4F /* main.swift in Sources */,
+				BC7970A82121E2C1009B0378 /* main.swift in Sources */,
+				BC948DC3212051450048BA4F /* Multiset.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC948DC4212052E60048BA4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7970A92121E303009B0378 /* Multiset.swift in Sources */,
+				BC948DCB212052E60048BA4F /* TestMultiset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +328,42 @@
 			};
 			name = Release;
 		};
+		BC948DCE212052E60048BA4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZDJL49QA87;
+				INFOPLIST_FILE = TestMultiset/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tester-suhada.TestMultiset";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		BC948DCF212052E60048BA4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZDJL49QA87;
+				INFOPLIST_FILE = TestMultiset/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tester-suhada.TestMultiset";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -278,6 +381,15 @@
 			buildConfigurations = (
 				BC948DC0212050FF0048BA4F /* Debug */,
 				BC948DC1212050FF0048BA4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC948DCD212052E60048BA4F /* Build configuration list for PBXNativeTarget "TestMultiset" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC948DCE212052E60048BA4F /* Debug */,
+				BC948DCF212052E60048BA4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

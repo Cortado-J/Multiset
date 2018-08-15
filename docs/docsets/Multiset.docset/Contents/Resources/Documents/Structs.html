@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structures  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
+    <a title="Structures  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Multiset Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/Adahus/Multiset"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Multiset Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Structures  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Multiset.html">Multiset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Multiset/MultisetIterator.html">– MultisetIterator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/MultisetIndex.html">MultisetIndex</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV"></a>
+                    <a name="//apple_ref/swift/Struct/Multiset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV">Multiset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <q>Multiset</q> is an unordered collection of hashable elements.</p>
+
+<p>The Multiset collection has similarities with Set and Dictionary,
+two collections in the swift standard library
+The key difference from a set is that a Multiset can have repeated Elements.
+It does this by storing a dictionary (called &lsquo;content&rsquo;) of type [Element, Int].</p>
+<h2 id='initialisation' class='heading'>Initialisation</h2>
+
+<p>A Multiset can be created by an array literal of type [Element] as in:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">ingredients</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"coffee"</span><span class="p">,</span> <span class="s">"milk"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">]</span>
+</code></pre>
+
+<p>or using variadic initialiser for two or more elements:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fruit</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Orange"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">)</span>   <span class="c1">// ["Apple":2, "Orange":1]</span>
+<span class="c1">// But can't do Multiset("Apple") because "Apple" is seen as an array of Characters!)</span>
+</code></pre>
+
+<p>or using a dictionary literal of type [Element:Int] as in:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">truth</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="nv">true</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="nv">false</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</code></pre>
+
+<p>or from a sequence (which may include repeated elements):</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">numbers</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>  <span class="c1">// [1000:2, 2000:1, 3000:1]</span>
+</code></pre>
+
+<p>for an empty multiset you must specify the Generic Parameter:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">words</span><span class="p">:</span>  <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">let</span> <span class="nv">numbers</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+</code></pre>
+<h2 id='inserting-and-removing-elements' class='heading'>Inserting and Removing Elements</h2>
+
+<p>To insert elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>    <span class="c1">// []</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>             <span class="c1">// ["Small":1]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>             <span class="c1">// ["Small":2]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Big"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">6</span><span class="p">)</span>     <span class="c1">// ["Small":2, "Big"]</span>
+</code></pre>
+
+<p>To remove elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>                <span class="c1">// [2000:1, 3000:10]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1">// [2000:1, 3000:7]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1">// [2000:1, 3000:7]</span>
+</code></pre>
+
+<p>If there aren&rsquo;t enough elements then remove will not remove any of
+them and this is indicated by the function returning false:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">resulta</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">7777</span><span class="p">)</span>      <span class="c1">// resulta is false</span>
+<span class="k">let</span> <span class="nv">resultb</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1">// resultb is false</span>
+</code></pre>
+
+<p>Or to remove as many as are available then use the isPossible override:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">resulta</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1">// resulta is 7 and multi is [2000:1]</span>
+<span class="k">let</span> <span class="nv">resultb</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">100</span><span class="p">)</span>  <span class="c1">// resultb is false</span>
+</code></pre>
+
+<p>To remove all of certain elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"AAA"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"BBB"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">"CCC"</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">(</span><span class="s">"AAA"</span><span class="p">)</span>   <span class="c1">// ["BBB":4, "CCC":4]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">()</span>        <span class="c1">// []</span>
+</code></pre>
+
+<p>To just set the number of a certain type of element:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">truth</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="nv">true</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="nv">false</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>    <span class="c1">// [true:5, false:4]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>   <span class="c1">// [true:5]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>   <span class="c1">// [true:5, false:7]</span>
+</code></pre>
+<h2 id='iterating' class='heading'>Iterating</h2>
+
+<p>There are 3 ways to iterate through a multiset:</p>
+
+<p>1) To iterate through all the elements of a multiset:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">size</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="n">type</span> <span class="n">will</span> <span class="n">come</span> <span class="n">grouped</span> <span class="n">together</span>
+<span class="n">but</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">different</span> <span class="n">groups</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="n">prints</span> <span class="s">"Big"</span>   <span class="s">"Big"</span>   <span class="s">"Big"</span> <span class="s">"Small"</span> <span class="s">"Small"</span>
+<span class="n">or</span>     <span class="n">prints</span> <span class="s">"Small"</span> <span class="s">"Small"</span> <span class="s">"Big"</span> <span class="s">"Big"</span>   <span class="s">"Big"</span>
+</code></pre>
+
+<p>2) To iterate through groups of different types of elements use <code>grouped()</code></p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="nf">grouped</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">elements</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="nf">prints</span> <span class="p">(</span><span class="s">"Big"</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>    <span class="n">and</span> <span class="nf">then</span>  <span class="p">(</span><span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">or</span>     <span class="nf">prints</span> <span class="p">(</span><span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span>  <span class="n">and</span> <span class="nf">then</span>  <span class="p">(</span><span class="s">"Big"</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+
+<p>3) To iterate through just the distinct elements of a multiset use <code>distinct()</code>:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">size</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="nf">distinct</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">elements</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="n">prints</span> <span class="s">"Big"</span>    <span class="n">and</span> <span class="n">then</span>  <span class="s">"Small"</span>
+<span class="n">or</span>     <span class="n">prints</span> <span class="s">"Small"</span>  <span class="n">and</span> <span class="n">then</span>  <span class="s">"Big"</span>
+</code></pre>
+<h2 id='sequence-and-collection-operations' class='heading'>Sequence and Collection Operations</h2>
+
+<p>In addition to the <code>Multiset</code> type&rsquo;s multiset operations, you can use any
+nonmutating sequence or collection methods with a multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">factorsOf12</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">factorsOf12</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"No factors"</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Twelve has </span><span class="se">\(</span><span class="n">factorsOf12</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s"> factors."</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Twelve has </span><span class="se">\(</span><span class="n">factorsOf12</span><span class="o">.</span><span class="n">distinctCount</span><span class="se">)</span><span class="s"> distinct factors."</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Prints "Twelve has 3 factors."</span>
+<span class="c1">// Prints "Twelve has 2 distinct factors."</span>
+
+<span class="k">let</span> <span class="nv">factorsProduct</span> <span class="o">=</span> <span class="n">factors</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="c1">// 'factorsProduct' == 12</span>
+
+<span class="k">let</span> <span class="nv">factorsStrings</span> <span class="o">=</span> <span class="n">factors</span><span class="o">.</span><span class="nf">sorted</span><span class="p">()</span><span class="o">.</span><span class="nf">map</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
+<span class="c1">// 'primeStrings' == ["2", "2", "3"]</span>
+</code></pre>
+
+<p>And as a collection you can use index operations:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"AA"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"BB"</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">firstIndex</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"BB"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>     <span class="c1">// ["AA":3, "BB":2]</span>
+ <span class="p">}</span>
+</code></pre>
+<h2 id='set-algebra-operations' class='heading'>Set Algebra Operations</h2>
+
+<p>Multiset provides the Set Algebra operations which are the same as the
+ones used by Set.  You can test a multiset for membership of an element
+or check its intersection with other multisets:</p>
+<li><code>contains(_:)</code> tests whether a multiset contains a specific element.</li>
+<li><q>equal to</q> operator (<code>==</code>) tests whether two multisets contain the same
+elements and the sanem number of those elements.</li>
+<li><code>isSubset(of:)</code> tests whether another multiset contains at least as many of
+each of the current multisets elements.</li>
+<li><code>isSuperset(of:)</code> tests whether a multiset contains at least as many of
+each of another multisets elements.</li>
+<li><code>isStrictSubset(of:)</code> and <code>isStrictSuperset(of:)</code> test whether a multiset
+is a subset or superset of, but not equal to, another multiset.</li>
+<li><p><code>isDisjoint(with:)</code> tests whether a multiset has any elements
+in common with another multiset.</p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Note that when multisets have more than one of the same element some of
+these operations may not be as obvious as with sets.
+For example even though:
+AAB = Multiset([<q>A</q>:2, <q>B</q>:1]) and ABB = Multiset([<q>A</q>:2, <q>B</q>:1])
+both contains <q>A</q> and <q>B</q> and no other elements, neither contains the other.</p>
+
+</div>
+
+<p>You can also combine, exclude, or subtract the elements of two multisets:</p>
+<li><code>union(_:)</code> creates a new multiset with the elements of a multiset and
+another multiset or sequence.</li>
+<li><code>intersection(_:)</code> creates a new multiset with only the elements common to
+a multiset and another multiset or sequence.</li>
+<li><code>symmetricDifference(_:)</code> creates a new multiset with the elements that are
+in either a multiset or another multiset or sequence, but not in both.</li>
+<li><p><code>subtracting(_:)</code> creates a new multiset with the elements of a multiset
+that are not also in another multiset or sequence.</p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Note that when multisets have more than one of the same element some of
+these operations may not be as obvious as with sets.  For example if:
+AAB = Multiset([<q>A</q>:2, <q>B</q>:1]) and ABC = Multiset([<q>A</q>:1, <q>B</q>:1, <q>C</q>:1])
+then AAB.symmetricDifference(ABC) is Multiset([<q>A</q>:1, <q>C</q>:1])</p>
+
+</div>
+
+<p>You can modify a multiset in place by using these mutating
+methods: <code>formUnion(_:)</code>, <code>formIntersection(_:)</code>,
+<code>formSymmetricDifference(_:)</code>, and <code>subtract(_:)</code>.</p>
+
+<p>Multiset operations are not limited to use with other multisets. You can perform
+many operations with sets, arrays or any sequence with the same Element type:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">word</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="kt">Array</span><span class="p">(</span><span class="s">"SINS"</span><span class="p">))</span>
+<span class="n">word</span> <span class="k">is</span> <span class="n">now</span> <span class="p">[</span><span class="s">"S"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"I"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"N"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="n">although</span> <span class="kt">Multisets</span> <span class="n">are</span> <span class="n">not</span> <span class="n">ordered</span> <span class="n">so</span> <span class="n">may</span>
+<span class="n">be</span> <span class="n">a</span> <span class="n">different</span> <span class="n">order</span><span class="o">.</span>
+
+<span class="k">let</span> <span class="nv">scrabbleHand</span><span class="p">:</span> <span class="p">[</span><span class="kt">Character</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"MISSING"</span><span class="p">]</span>
+
+<span class="c1">// Tests whether the characters of the word SINS can be found in the</span>
+ <span class="c1">// array of characters MISSING:</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">scrabbleHand</span><span class="p">)</span> <span class="p">)</span>
+<span class="c1">// Prints "true"</span>
+
+<span class="c1">// Performs an intersection with an Array&lt;Int&gt;</span>
+<span class="k">let</span> <span class="nv">primes</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">23</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">favoriteNumbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">primes</span><span class="o">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">favoriteNumbers</span><span class="p">))</span>
+<span class="c1">// Prints "[5, 7]"</span>
+</code></pre>
+<h2 id='other-reading' class='heading'>Other reading</h2>
+
+<p>Because Multiset has some similarity with both Set and Dictionary, reading
+the documentation or source for those may also be useful:</p>
+
+<p><a href="https://github.com/apple/swift/blob/master/stdlib/public/core/Set.swift">https://github.com/apple/swift/blob/master/stdlib/public/core/Set.swift</a>
+<a href="https://github.com/apple/swift/blob/master/stdlib/public/core/Dictionary.swift">https://github.com/apple/swift/blob/master/stdlib/public/core/Dictionary.swift</a></p>
+
+                        <a href="Structs/Multiset.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Element</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Multiset0A5IndexV"></a>
+                    <a name="//apple_ref/swift/Struct/MultisetIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Multiset0A5IndexV">MultisetIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='multisetindex' class='heading'>MultisetIndex</h2>
+
+<p>Defines an index into a Multiset</p>
+
+                        <a href="Structs/MultisetIndex.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MultisetIndex</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Element</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/Adahus" target="_blank" rel="external">Adahus</a>. All rights reserved. (Last updated: 2018-08-15)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Multiset Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/Multiset" class="dashAnchor"></a>
+    <a title="Multiset Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Multiset Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/Adahus/Multiset"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Multiset Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Multiset Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Multiset.html">Multiset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Multiset/MultisetIterator.html">– MultisetIterator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MultisetIndex.html">MultisetIndex</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Multiset</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Element</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                </div>
+              </div>
+            <p>A <q>Multiset</q> is an unordered collection of hashable elements.</p>
+
+<p>The Multiset collection has similarities with Set and Dictionary,
+two collections in the swift standard library
+The key difference from a set is that a Multiset can have repeated Elements.
+It does this by storing a dictionary (called &lsquo;content&rsquo;) of type [Element, Int].</p>
+<h2 id='initialisation' class='heading'>Initialisation</h2>
+
+<p>A Multiset can be created by an array literal of type [Element] as in:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">ingredients</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"coffee"</span><span class="p">,</span> <span class="s">"milk"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">]</span>
+</code></pre>
+
+<p>or using variadic initialiser for two or more elements:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fruit</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Orange"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">)</span>   <span class="c1">// ["Apple":2, "Orange":1]</span>
+<span class="c1">// But can't do Multiset("Apple") because "Apple" is seen as an array of Characters!)</span>
+</code></pre>
+
+<p>or using a dictionary literal of type [Element:Int] as in:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">truth</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="nv">true</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="nv">false</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</code></pre>
+
+<p>or from a sequence (which may include repeated elements):</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">numbers</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>  <span class="c1">// [1000:2, 2000:1, 3000:1]</span>
+</code></pre>
+
+<p>for an empty multiset you must specify the Generic Parameter:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">words</span><span class="p">:</span>  <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">let</span> <span class="nv">numbers</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+</code></pre>
+<h2 id='inserting-and-removing-elements' class='heading'>Inserting and Removing Elements</h2>
+
+<p>To insert elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>    <span class="c1">// []</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>             <span class="c1">// ["Small":1]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>             <span class="c1">// ["Small":2]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Big"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">6</span><span class="p">)</span>     <span class="c1">// ["Small":2, "Big"]</span>
+</code></pre>
+
+<p>To remove elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>                <span class="c1">// [2000:1, 3000:10]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1">// [2000:1, 3000:7]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1">// [2000:1, 3000:7]</span>
+</code></pre>
+
+<p>If there aren&rsquo;t enough elements then remove will not remove any of
+them and this is indicated by the function returning false:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">resulta</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">7777</span><span class="p">)</span>      <span class="c1">// resulta is false</span>
+<span class="k">let</span> <span class="nv">resultb</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1">// resultb is false</span>
+</code></pre>
+
+<p>Or to remove as many as are available then use the isPossible override:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">resulta</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1">// resulta is 7 and multi is [2000:1]</span>
+<span class="k">let</span> <span class="nv">resultb</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">100</span><span class="p">)</span>  <span class="c1">// resultb is false</span>
+</code></pre>
+
+<p>To remove all of certain elements:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"AAA"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"BBB"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">"CCC"</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">(</span><span class="s">"AAA"</span><span class="p">)</span>   <span class="c1">// ["BBB":4, "CCC":4]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">()</span>        <span class="c1">// []</span>
+</code></pre>
+
+<p>To just set the number of a certain type of element:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">truth</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="nv">true</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="nv">false</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>    <span class="c1">// [true:5, false:4]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>   <span class="c1">// [true:5]</span>
+<span class="n">truth</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>   <span class="c1">// [true:5, false:7]</span>
+</code></pre>
+<h2 id='iterating' class='heading'>Iterating</h2>
+
+<p>There are 3 ways to iterate through a multiset:</p>
+
+<p>1) To iterate through all the elements of a multiset:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">size</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">elements</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="n">type</span> <span class="n">will</span> <span class="n">come</span> <span class="n">grouped</span> <span class="n">together</span>
+<span class="n">but</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">different</span> <span class="n">groups</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="n">prints</span> <span class="s">"Big"</span>   <span class="s">"Big"</span>   <span class="s">"Big"</span> <span class="s">"Small"</span> <span class="s">"Small"</span>
+<span class="n">or</span>     <span class="n">prints</span> <span class="s">"Small"</span> <span class="s">"Small"</span> <span class="s">"Big"</span> <span class="s">"Big"</span>   <span class="s">"Big"</span>
+</code></pre>
+
+<p>2) To iterate through groups of different types of elements use <code>grouped()</code></p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="nf">grouped</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">elements</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="nf">prints</span> <span class="p">(</span><span class="s">"Big"</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>    <span class="n">and</span> <span class="nf">then</span>  <span class="p">(</span><span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">or</span>     <span class="nf">prints</span> <span class="p">(</span><span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span>  <span class="n">and</span> <span class="nf">then</span>  <span class="p">(</span><span class="s">"Big"</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+
+<p>3) To iterate through just the distinct elements of a multiset use <code>distinct()</code>:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">size</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="nf">distinct</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">the</span> <span class="n">elements</span> <span class="k">is</span> <span class="n">not</span> <span class="n">defined</span> <span class="nv">so</span><span class="p">:</span>
+<span class="n">either</span> <span class="n">prints</span> <span class="s">"Big"</span>    <span class="n">and</span> <span class="n">then</span>  <span class="s">"Small"</span>
+<span class="n">or</span>     <span class="n">prints</span> <span class="s">"Small"</span>  <span class="n">and</span> <span class="n">then</span>  <span class="s">"Big"</span>
+</code></pre>
+<h2 id='sequence-and-collection-operations' class='heading'>Sequence and Collection Operations</h2>
+
+<p>In addition to the <code>Multiset</code> type&rsquo;s multiset operations, you can use any
+nonmutating sequence or collection methods with a multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">factorsOf12</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">factorsOf12</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"No factors"</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Twelve has </span><span class="se">\(</span><span class="n">factorsOf12</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s"> factors."</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Twelve has </span><span class="se">\(</span><span class="n">factorsOf12</span><span class="o">.</span><span class="n">distinctCount</span><span class="se">)</span><span class="s"> distinct factors."</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Prints "Twelve has 3 factors."</span>
+<span class="c1">// Prints "Twelve has 2 distinct factors."</span>
+
+<span class="k">let</span> <span class="nv">factorsProduct</span> <span class="o">=</span> <span class="n">factors</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="c1">// 'factorsProduct' == 12</span>
+
+<span class="k">let</span> <span class="nv">factorsStrings</span> <span class="o">=</span> <span class="n">factors</span><span class="o">.</span><span class="nf">sorted</span><span class="p">()</span><span class="o">.</span><span class="nf">map</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
+<span class="c1">// 'primeStrings' == ["2", "2", "3"]</span>
+</code></pre>
+
+<p>And as a collection you can use index operations:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"AA"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"BB"</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="nf">firstIndex</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"BB"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>     <span class="c1">// ["AA":3, "BB":2]</span>
+ <span class="p">}</span>
+</code></pre>
+<h2 id='set-algebra-operations' class='heading'>Set Algebra Operations</h2>
+
+<p>Multiset provides the Set Algebra operations which are the same as the
+ones used by Set.  You can test a multiset for membership of an element
+or check its intersection with other multisets:</p>
+<li><code>contains(_:)</code> tests whether a multiset contains a specific element.</li>
+<li><q>equal to</q> operator (<code>==</code>) tests whether two multisets contain the same
+elements and the sanem number of those elements.</li>
+<li><code>isSubset(of:)</code> tests whether another multiset contains at least as many of
+each of the current multisets elements.</li>
+<li><code>isSuperset(of:)</code> tests whether a multiset contains at least as many of
+each of another multisets elements.</li>
+<li><code>isStrictSubset(of:)</code> and <code>isStrictSuperset(of:)</code> test whether a multiset
+is a subset or superset of, but not equal to, another multiset.</li>
+<li><p><code>isDisjoint(with:)</code> tests whether a multiset has any elements
+in common with another multiset.</p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Note that when multisets have more than one of the same element some of
+these operations may not be as obvious as with sets.
+For example even though:
+AAB = Multiset([<q>A</q>:2, <q>B</q>:1]) and ABB = Multiset([<q>A</q>:2, <q>B</q>:1])
+both contains <q>A</q> and <q>B</q> and no other elements, neither contains the other.</p>
+
+</div>
+
+<p>You can also combine, exclude, or subtract the elements of two multisets:</p>
+<li><code>union(_:)</code> creates a new multiset with the elements of a multiset and
+another multiset or sequence.</li>
+<li><code>intersection(_:)</code> creates a new multiset with only the elements common to
+a multiset and another multiset or sequence.</li>
+<li><code>symmetricDifference(_:)</code> creates a new multiset with the elements that are
+in either a multiset or another multiset or sequence, but not in both.</li>
+<li><p><code>subtracting(_:)</code> creates a new multiset with the elements of a multiset
+that are not also in another multiset or sequence.</p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Note that when multisets have more than one of the same element some of
+these operations may not be as obvious as with sets.  For example if:
+AAB = Multiset([<q>A</q>:2, <q>B</q>:1]) and ABC = Multiset([<q>A</q>:1, <q>B</q>:1, <q>C</q>:1])
+then AAB.symmetricDifference(ABC) is Multiset([<q>A</q>:1, <q>C</q>:1])</p>
+
+</div>
+
+<p>You can modify a multiset in place by using these mutating
+methods: <code>formUnion(_:)</code>, <code>formIntersection(_:)</code>,
+<code>formSymmetricDifference(_:)</code>, and <code>subtract(_:)</code>.</p>
+
+<p>Multiset operations are not limited to use with other multisets. You can perform
+many operations with sets, arrays or any sequence with the same Element type:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">word</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="kt">Array</span><span class="p">(</span><span class="s">"SINS"</span><span class="p">))</span>
+<span class="n">word</span> <span class="k">is</span> <span class="n">now</span> <span class="p">[</span><span class="s">"S"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"I"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"N"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="n">although</span> <span class="kt">Multisets</span> <span class="n">are</span> <span class="n">not</span> <span class="n">ordered</span> <span class="n">so</span> <span class="n">may</span>
+<span class="n">be</span> <span class="n">a</span> <span class="n">different</span> <span class="n">order</span><span class="o">.</span>
+
+<span class="k">let</span> <span class="nv">scrabbleHand</span><span class="p">:</span> <span class="p">[</span><span class="kt">Character</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"MISSING"</span><span class="p">]</span>
+
+<span class="c1">// Tests whether the characters of the word SINS can be found in the</span>
+ <span class="c1">// array of characters MISSING:</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">scrabbleHand</span><span class="p">)</span> <span class="p">)</span>
+<span class="c1">// Prints "true"</span>
+
+<span class="c1">// Performs an intersection with an Array&lt;Int&gt;</span>
+<span class="k">let</span> <span class="nv">primes</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">23</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">favoriteNumbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">primes</span><span class="o">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">favoriteNumbers</span><span class="p">))</span>
+<span class="c1">// Prints "[5, 7]"</span>
+</code></pre>
+<h2 id='other-reading' class='heading'>Other reading</h2>
+
+<p>Because Multiset has some similarity with both Set and Dictionary, reading
+the documentation or source for those may also be useful:</p>
+
+<p><a href="https://github.com/apple/swift/blob/master/stdlib/public/core/Set.swift">https://github.com/apple/swift/blob/master/stdlib/public/core/Set.swift</a>
+<a href="https://github.com/apple/swift/blob/master/stdlib/public/core/Dictionary.swift">https://github.com/apple/swift/blob/master/stdlib/public/core/Dictionary.swift</a></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an empty multiset:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">empty</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">empty</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">)</span>   <span class="c1">// Prints "true"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGs10DictionaryVyxSiGcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGs10DictionaryVyxSiGcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a Multiset from another dictionary:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"C"</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">multi2</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="n">multi</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi2</span><span class="p">)</span>    <span class="c1">//Prints ["A":2, "B":1, "C":5])</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="kt">Dictionary</span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGqd__c7ElementQyd__Rszs8SequenceRd__lufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGqd__c7ElementQyd__Rszs8SequenceRd__lufc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a new multiset from a finite sequence of items:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">validIndices</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">validIndices</span><span class="p">)</span>    <span class="c1">//Prints "[7:2, 8:1, 1:1, 2:1]"    (order of elements may vary)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">Source</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">Source</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGx_xxdtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGx_xxdtcfc">init(_:_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a new multiset from a variadic sequence of 2 or more items:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">truth</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">truth</span><span class="p">)</span>    <span class="c1">//Prints "[true:3, false:1]"    (order of elements may vary)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">firstElement</span><span class="p">:</span> <span class="kt">Element</span><span class="p">,</span> <span class="n">_</span> <span class="nv">secondElement</span><span class="p">:</span> <span class="kt">Element</span><span class="p">,</span> <span class="n">_</span> <span class="nv">remainingElements</span><span class="p">:</span> <span class="kt">Element</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGSi15minimumCapacity_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(minimumCapacity:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGSi15minimumCapacity_tcfc">init(minimumCapacity:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create an empty Multiset with preallocated capacity.</p>
+
+<p>Note that the capacity is the number of unique elements.
+Multiple copies of the same element don&rsquo;t require more space because
+only one copy of each distinct element is stored along with a count of
+the number of that element.</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">minimumCapacity</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">minimumCapacity</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8capacitySivp"></a>
+                    <a name="//apple_ref/swift/Property/capacity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8capacitySivp">capacity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get capacity of the underlying dictionary</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">minimumCapacity</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="n">capacity</span><span class="p">)</span>
+<span class="c1">// Prints 100</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">capacity</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV15reserveCapacityySiF"></a>
+                    <a name="//apple_ref/swift/Method/reserveCapacity(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV15reserveCapacityySiF">reserveCapacity(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set capacity of the underlying dictionary</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">reserveCapacity</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="n">capacity</span><span class="p">)</span>
+<span class="c1">// Prints 100</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">reserveCapacity</span><span class="p">(</span><span class="n">_</span> <span class="nv">minimumCapacity</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGx12arrayLiterald_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(arrayLiteral:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGx12arrayLiterald_tcfc">init(arrayLiteral:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a multiset containing the elements of the given array literal.</p>
+
+<p>Note that [unlike Set], if the array has repeated items they will be included.
+Note that the same element can be repeated.
+A multiset is unordered so the order may not be preserved.
+(Do not call this initializer directly. It is used by the compiler when
+ you use an array literal.)</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">drink</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"coffee"</span><span class="p">,</span> <span class="s">"milk"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">drink</span><span class="p">)</span>    <span class="c1">// Prints ["sugar":2, "milk":1, "coffee":1]</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">arrayLiteral</span> <span class="nv">elements</span><span class="p">:</span> <span class="kt">Element</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGx_Sit17dictionaryLiterald_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(dictionaryLiteral:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGx_Sit17dictionaryLiterald_tcfc">init(dictionaryLiteral:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a multiset containing the elements of the given dictionary literal.</p>
+
+<p>The <q>values</q> of the Dictionary must be integers representing the number of
+each element.
+If a count of zero is used then the element will not be added to the multiset.
+A multiset is unordered so the order may not be preserved.
+(Do not call this initializer directly. It is used by the compiler when
+ you use a dictionary literal.)</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">drink</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"coffee"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"milk"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"sugar"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"sweetener"</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">drink</span><span class="p">)</span>    <span class="c1">// Prints ["sugar":2, "milk":1, "coffee":1]</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">dictionaryLiteral</span> <span class="nv">elements</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5countSivp"></a>
+                    <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5countSivp">count</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The number of elements in the multiset</p>
+
+<p>Note that if an element is repeated twice then that counts 2.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>    <span class="c1">// Prints 6</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV13distinctCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/distinctCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV13distinctCountSivp">distinctCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The number of distinct elements in the multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="n">distinctCount</span><span class="p">)</span>    <span class="c1">// Prints 2</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">distinctCount</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5countSix2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/count(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5countSix2of_tF">count(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The number of elements of a particular type in the multiset.</p>
+
+<p>[In mathematics know as multiplicity]</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">count</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"B"</span><span class="p">))</span>    <span class="c1">// Prints 4</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">count</span><span class="p">(</span><span class="n">of</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6insertyx_Si5counttF"></a>
+                    <a name="//apple_ref/swift/Method/insert(_:count:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6insertyx_Si5counttF">insert(_:count:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Insert a number of equal elements (or one if no count specified)</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>  <span class="c1">// []</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Big"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">6</span><span class="p">)</span>   <span class="c1">// ["Big":6]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>           <span class="c1">// ["Big":6, "Small":1]</span>
+</code></pre>
+
+<p>Note that insert is overloaded slightly oddly to satisfy SetAlgebra.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="n">_</span> <span class="nv">newElement</span><span class="p">:</span> <span class="kt">Element</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6removeSbx_Si5counttF"></a>
+                    <a name="//apple_ref/swift/Method/remove(_:count:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6removeSbx_Si5counttF">remove(_:count:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove a number of equal elements (or one if no count specified)</p>
+
+<p>If all are not availble to remove then don&rsquo;t remove any and return false</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>    <span class="c1">// ["Big":6, "Small":3]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="s">"Big"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1">// ["Big":4, "Small":3]</span>
+<span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="s">"Small"</span><span class="p">)</span>                         <span class="c1">// ["Big":4, "Small":2]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="s">"Small"</span><span class="p">,</span><span class="nv">count</span><span class="p">:</span><span class="mi">10</span><span class="p">))</span>         <span class="c1">// Prints false</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6removeSix10ifPossible_Si5counttF"></a>
+                    <a name="//apple_ref/swift/Method/remove(ifPossible:count:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6removeSix10ifPossible_Si5counttF">remove(ifPossible:count:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove a number of equal elements as possible (try for just one if no count specified)</p>
+
+<p>If all are not available to remove then just remove as many as possible
+Return the number removed</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>           <span class="c1">//                  multi is now ["Big":6, "Small":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="s">"Big"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span><span class="mi">2</span><span class="p">))</span>      <span class="c1">// Prints 2         multi is now ["Big":4, "Small":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="s">"Big"</span><span class="p">))</span>               <span class="c1">// Prints 1         multi is now ["Big":3, "Small":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="s">"Small"</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">5</span><span class="p">))</span>   <span class="c1">// Prints 3         multi is now ["Big":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">ifPossible</span><span class="p">:</span> <span class="s">"Medium"</span><span class="p">))</span>            <span class="c1">// Prints 0         multi is now ["Big":3]</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">ifPossible</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV9removeAllSixF"></a>
+                    <a name="//apple_ref/swift/Method/removeAll(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV9removeAllSixF">removeAll(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove all of a particular element</p>
+
+<p>Returns the count of the number of elements removed</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>    <span class="c1">//               multi is now ["Big":6, "Small":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">(</span><span class="s">"Small"</span><span class="p">))</span>               <span class="c1">// Prints 3      multi is now ("Big", 6)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeAll</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV9removeAllSiqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/removeAll(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV9removeAllSiqd__7ElementQyd__Rszs8SequenceRd__lF">removeAll(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove all occurrences of a sequence of elements</p>
+
+<p>Returns the count of the number of elements removed</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Big"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">"Medium"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Small"</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>    <span class="c1">//               multi is now ["Big":6, "Medium":2, "Small":3]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">([</span><span class="s">"Small"</span><span class="p">,</span><span class="s">"Medium"</span><span class="p">]))</span>                <span class="c1">// Prints 5      multi is now ("Big", 6)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">removeAll</span><span class="o">&lt;</span><span class="kt">Source</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="k">where</span> <span class="kt">Element</span> <span class="o">==</span> <span class="kt">Source</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Source</span> <span class="p">:</span> <span class="kt">Sequence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV9removeAllySb15keepingCapacity_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeAll(keepingCapacity:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV9removeAllySb15keepingCapacity_tF">removeAll(keepingCapacity:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes all elements from the multiset</p>
+
+<p>If keepingCapacity = <code>true</code>, the multiset&rsquo;s buffer capacity is preserved</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeAll</span><span class="p">(</span><span class="n">keepingCapacity</span> <span class="nv">keepCapacity</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6filterAByxGSbxKcKF"></a>
+                    <a name="//apple_ref/swift/Method/filter(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6filterAByxGSbxKcKF">filter(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new multiset containing the elements of the multiset that satisfy
+the given predicate.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cast</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Vivien"</span><span class="p">,</span> <span class="s">"Marlon"</span><span class="p">,</span> <span class="s">"Kim"</span><span class="p">,</span> <span class="s">"Karl"</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">shortNames</span> <span class="o">=</span> <span class="n">cast</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shortNames</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">cast</span><span class="p">))</span>    <span class="c1">// Prints true</span>
+<span class="n">shortNames</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="s">"Vivien"</span><span class="p">)</span>    <span class="c1">// Prints false</span>
+</code></pre>
+
+<p>isIncluded ia a closure that takes an element as its argument and returns
+a Bool value indicating whether the element should be included.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">filter</span><span class="p">(</span><span class="n">_</span> <span class="nv">isIncluded</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV0A8IteratorV"></a>
+                    <a name="//apple_ref/swift/Struct/MultisetIterator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV0A8IteratorV">MultisetIterator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This iterator works through each element in the dictionary</p>
+
+<p>Multiset is not ordered so the order is not predictable but the same elements will always come together.</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Yellow"</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span> <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">}</span>
+<span class="c1">// Prints either:        "Yellow" then "Yellow" then "Red"</span>
+<span class="c1">// or:                   "Red"    then "Yellow" then "Yellow"</span>
+<span class="c1">// but would never get:  "Yellow" then "Red"    then "Yellow"</span>
+</code></pre>
+
+                        <a href="../Structs/Multiset/MultisetIterator.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MultisetIterator</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">IteratorProtocol</span> <span class="k">where</span> <span class="kt">Element</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s8SequenceP12makeIterator0C0QzyF"></a>
+                    <a name="//apple_ref/swift/Method/makeIterator()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s8SequenceP12makeIterator0C0QzyF">makeIterator()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">makeIterator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Multiset/MultisetIterator.html">MultisetIterator</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s10CollectionP5Index"></a>
+                    <a name="//apple_ref/swift/Alias/Index" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s10CollectionP5Index">Index</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Index</span> <span class="o">=</span> <span class="kt"><a href="../Structs/MultisetIndex.html">MultisetIndex</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10startIndexAA0aC0VyxGvp"></a>
+                    <a name="//apple_ref/swift/Property/startIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10startIndexAA0aC0VyxGvp">startIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The starting position for iterating members of the multiset.</p>
+
+<p>If the multiset is empty, <code>startIndex</code> is equal to <code><a href="../Structs/Multiset.html#/s:8MultisetAAV8endIndexAA0aC0VyxGvp">endIndex</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">startIndex</span><span class="p">:</span> <span class="kt"><a href="../Structs/Multiset.html#/s:s10CollectionP5Index">Index</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8endIndexAA0aC0VyxGvp"></a>
+                    <a name="//apple_ref/swift/Property/endIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8endIndexAA0aC0VyxGvp">endIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <q>past the end</q> position for the multiset&mdash;that is, the position one
+greater than the last valid subscript argument.</p>
+
+<p>If the multiset is empty, <code>endIndex</code> is equal to <code><a href="../Structs/Multiset.html#/s:8MultisetAAV10startIndexAA0aC0VyxGvp">startIndex</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">endIndex</span><span class="p">:</span> <span class="kt"><a href="../Structs/Multiset.html#/s:s10CollectionP5Index">Index</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVxAA0A5IndexVyxGcip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVxAA0A5IndexVyxGcip">subscript(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Accesses the member at the given position.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt"><a href="../Structs/Multiset.html#/s:s10CollectionP5Index">Index</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5indexAA0A5IndexVyxGAF5after_tF"></a>
+                    <a name="//apple_ref/swift/Method/index(after:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5indexAA0A5IndexVyxGAF5after_tF">index(after:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Finds the index which immediately follows the given index</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">index</span><span class="p">(</span><span class="n">after</span> <span class="nv">index</span><span class="p">:</span> <span class="kt"><a href="../Structs/MultisetIndex.html">MultisetIndex</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/MultisetIndex.html">MultisetIndex</a></span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10firstIndexAA0aC0VyxGSgx2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/firstIndex(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10firstIndexAA0aC0VyxGSgx2of_tF">firstIndex(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the index of the first given element in the set, or <code>nil</code> if the
+element is not a member of the set.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">firstIndex</span><span class="p">(</span><span class="n">of</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Multiset.html#/s:s10CollectionP5Index">Index</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5firstxSgvp"></a>
+                    <a name="//apple_ref/swift/Property/first" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5firstxSgvp">first</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The first element of the multiset.</p>
+
+<p>The first element of the set is not necessarily the first element added
+to the set. Don&rsquo;t expect any particular ordering of set elements.
+If the set is empty, the value of this property is <code>nil</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">first</span><span class="p">:</span> <span class="kt">Element</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6removexAA0A5IndexVyxG2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/remove(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6removexAA0A5IndexVyxG2at_tF">remove(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the element at the given index of the multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">at</span> <span class="nv">position</span><span class="p">:</span> <span class="kt"><a href="../Structs/Multiset.html#/s:s10CollectionP5Index">Index</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A string that represents the contents of the multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"C"</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="p">)</span>    <span class="c1">//Prints ["A":2, "B":1, "C":5])</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV16debugDescriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/debugDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV16debugDescriptionSSvp">debugDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A string that represents the contents of the set, suitable for debugging.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multi</span> <span class="o">=</span> <span class="kt">Multiset</span><span class="p">([</span><span class="s">"A"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"C"</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">multi</span><span class="p">)</span>    <span class="c1">//Prints Multiset["A":2, "B":1, "C":5])</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV2eeoiSbAByxG_ADtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV2eeoiSbAByxG_ADtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value indicating whether two multisets are equal</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV4hashXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV4hashXeXeF">hash(into:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Hashes the essential components of this value by feeding them into the
+given hasher.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;&lt;</span><span class="n">error</span> <span class="n">type</span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8containsSbxF"></a>
+                    <a name="//apple_ref/swift/Method/contains(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8containsSbxF">contains(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value that indicates whether the given element exists
+in the multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fruit</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">fruit</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="s">"Orange"</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Found it"</span><span class="p">)</span>    <span class="c1">// Prints "Found it"</span>
+<span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contains</span><span class="p">(</span><span class="n">_</span> <span class="nv">member</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5unionAByxGADF"></a>
+                    <a name="//apple_ref/swift/Method/union(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5unionAByxGADF">union(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new multiset with elements from this multiset and the given multiset.</p>
+
+<p>If both multisets have some of the same element then the new multiset will have
+the more numerous of the two.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">juicy</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">yellow</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Lemon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Melon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">juicyOrYellow</span> <span class="o">=</span> <span class="n">juicy</span><span class="o">.</span><span class="nf">union</span><span class="p">(</span><span class="n">yellow</span><span class="p">)</span>    <span class="c1">// ["Orange":2, "Lemon":5, "Melon":1]  (Order may vary)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">union</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV12intersectionAByxGADF"></a>
+                    <a name="//apple_ref/swift/Method/intersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV12intersectionAByxGADF">intersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new multiset with elements that are common to both this multiset
+and the given multiset.</p>
+
+<p>If both multisets have some of the same element then the new multiset will have
+the least numerous of the two.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">juicy</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">yellow</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Lemon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Melon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">juicyAndYellow</span> <span class="o">=</span> <span class="n">juicy</span><span class="o">.</span><span class="nf">intersection</span><span class="p">(</span><span class="n">yellow</span><span class="p">)</span>    <span class="c1">// ["Lemon":3]</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">intersection</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV19symmetricDifferenceAByxGADF"></a>
+                    <a name="//apple_ref/swift/Method/symmetricDifference(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV19symmetricDifferenceAByxGADF">symmetricDifference(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new multiset with elements that are in either this multiset or
+the given multiset, but not both.</p>
+
+<p>If both sets have some of the same element then the new multiset will have
+the difference between the two.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">juicy</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">yellow</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Lemon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Melon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">juicyExclusiveOrYellow</span> <span class="o">=</span> <span class="n">juicy</span><span class="o">.</span><span class="nf">symmetricDifference</span><span class="p">(</span><span class="n">yellow</span><span class="p">)</span>    <span class="c1">// ["Orange":2, "Lemon":2, "Melon":1]  (Order may vary)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">symmetricDifference</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV11subtractingAByxGADF"></a>
+                    <a name="//apple_ref/swift/Method/subtracting(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV11subtractingAByxGADF">subtracting(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new multiset with elements that are in this multiset but NOT in
+the given multiset.</p>
+
+<p>If both sets have some of the same element then the new multiset will have
+the difference between the two.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">juicy</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">yellow</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Lemon"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Melon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">juicyButNotYellow</span> <span class="o">=</span> <span class="n">juicy</span><span class="o">.</span><span class="nf">subtracting</span><span class="p">(</span><span class="n">yellow</span><span class="p">)</span>    <span class="c1">// ["Orange":2, "Lemon":2]  (Order may vary)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subtracting</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8isSubsetSbAByxG2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/isSubset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8isSubsetSbAByxG2of_tF">isSubset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value that indicates whether this multiset is a subset of
+the given multiset.</p>
+
+<p>If both multisets have some of the same element then this multiset must have
+less than or the same number of elements as the given multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">stock</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Blue"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Yellow"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">shopping</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Blue"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shopping</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">stock</span><span class="p">))</span>    <span class="c1">// Prints "true"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isSubset</span><span class="p">(</span><span class="n">of</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10isDisjointSbAByxG4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/isDisjoint(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10isDisjointSbAByxG4with_tF">isDisjoint(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value that indicates whether this multiset is disjoint from
+the given multiset.</p>
+
+<p>If both multisets contain the same element then the sets will not be disjoint</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">stock</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Blue"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Yellow"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">shopping</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"Orange"</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shopping</span><span class="o">.</span><span class="nf">isDisjoint</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">stock</span><span class="p">))</span>    <span class="c1">// Prints "false"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isDisjoint</span><span class="p">(</span><span class="n">with</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10isSupersetSbAByxG2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/isSuperset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10isSupersetSbAByxG2of_tF">isSuperset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value that indicates whether this multiset is a superset of
+the given multiset.</p>
+
+<p>If both multisets have some of the same element then this multiset must have
+more than or the same number of elements as the given multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">stock</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Blue"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Yellow"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">shopping</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Red"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Blue"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">stock</span><span class="o">.</span><span class="nf">isSuperset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">shopping</span><span class="p">))</span>    <span class="c1">// Prints "true"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isSuperset</span><span class="p">(</span><span class="n">of</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV7isEmptySbvp"></a>
+                    <a name="//apple_ref/swift/Property/isEmpty" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV7isEmptySbvp">isEmpty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A Boolean value that indicates whether the multiset is empty.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isEmpty</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s10SetAlgebraP6insertSb8inserted_7ElementQz17memberAfterInserttAFF"></a>
+                    <a name="//apple_ref/swift/Method/insert(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s10SetAlgebraP6insertSb8inserted_7ElementQz17memberAfterInserttAFF">insert(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Inserts the given element in the multiset.
+Note that if the element is already in the multiset then it increases the count of that element.</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">fruit</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">fruit</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Orange"</span><span class="p">)</span>    <span class="c1">// ["Orange":3, "Lemon":1]</span>
+</code></pre>
+
+<p>Note that insert is overloaded slightly oddly to satisfy SetAlgebra.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="n">_</span> <span class="nv">newMember</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nv">inserted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">memberAfterInsert</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s10SetAlgebraP6update7ElementQzSgAE4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s10SetAlgebraP6update7ElementQzSgAE4with_tF">update(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Updates the element in the multiset.</p>
+
+<p>Note that this is not meaningful for a multiset because the value is always just an Integer
+but this function needs to be included to conform to Setalgebra.  Recommend to not use this.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">with</span> <span class="nv">newMember</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV6removexSgxF"></a>
+                    <a name="//apple_ref/swift/Method/remove(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV6removexSgxF">remove(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes one of the given element from the multiset.</p>
+
+<p>Return the element or nil if no element to remove.
+If there are two or more of the given element then decrease the count of that
+element by one.</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">fruit</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Orange"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Lemon"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">fruit</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="s">"Orange"</span><span class="p">)</span>    <span class="c1">// ["Orange":2, "Lemon":1]  (Order may vary)</span>
+<span class="n">fruit</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="s">"Lemon"</span><span class="p">)</span>     <span class="c1">// ["Orange":2]</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">_</span> <span class="nv">member</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV9formUnionyAByxGF"></a>
+                    <a name="//apple_ref/swift/Method/formUnion(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV9formUnionyAByxGF">formUnion(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>MARK: Mutating set functions: union, intersection, symmetricDifference, subtract
+Mutating version of union</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">formUnion</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV16formIntersectionyAByxGF"></a>
+                    <a name="//apple_ref/swift/Method/formIntersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV16formIntersectionyAByxGF">formIntersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mutating version of intersection</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">formIntersection</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV23formSymmetricDifferenceyAByxGF"></a>
+                    <a name="//apple_ref/swift/Method/formSymmetricDifference(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV23formSymmetricDifferenceyAByxGF">formSymmetricDifference(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mutating version of symmetricDifference</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">formSymmetricDifference</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8subtractyAByxGF"></a>
+                    <a name="//apple_ref/swift/Method/subtract(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8subtractyAByxGF">subtract(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mutating version of subtracting</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV14isStrictSubsetSbAByxG2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/isStrictSubset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV14isStrictSubsetSbAByxG2of_tF">isStrictSubset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>As for isSubset but if the two multisets are equal then return false</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isStrictSubset</span><span class="p">(</span><span class="n">of</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV16isStrictSupersetSbAByxG2of_tF"></a>
+                    <a name="//apple_ref/swift/Method/isStrictSuperset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV16isStrictSupersetSbAByxG2of_tF">isStrictSuperset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>As for isSuperset but if the two multisets are equal then return false</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isStrictSuperset</span><span class="p">(</span><span class="n">of</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAVAByxGqd__cs8SequenceRd__x_Sit7ElementRtd__lufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAVAByxGqd__cs8SequenceRd__x_Sit7ElementRtd__lufc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>MARK: Initialisers:
+Create a new multiset from a finite sequence of (element, count) tuples:
+    let multi = Multiset([(<q>A</q>,8),(<q>B</q>,3)])
+    print(multi)    //Prints <q>[</q>A<q>:8,</q>B&quot;:3]    (order of elements may vary)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">Source</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">sequence</span><span class="p">:</span> <span class="kt">Source</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">Source</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="p">(</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8isSubsetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/isSubset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8isSubsetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF">isSubset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func isSubset(of other: Self) -&gt; Bool</p>
+
+<p>As for isSubset but using a sequence of Elements rather than another multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">lunch</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Spam"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"Egg"</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">lunch</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">[</span><span class="s">"Spam"</span><span class="p">,</span> <span class="s">"Spam"</span><span class="p">,</span> <span class="s">"Spam"</span><span class="p">,</span> <span class="s">"Spam"</span><span class="p">,</span> <span class="s">"Egg"</span><span class="p">]))</span>    <span class="c1">// Prints "true"    X)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">isSubset</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">of</span> <span class="nv">possibleSuperset</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV14isStrictSubsetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/isStrictSubset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV14isStrictSubsetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF">isStrictSubset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func isStrictSubset(of other: Self) -&gt; Bool {</p>
+
+<p>As for isStrictSubset but using a sequence of Elements rather than another multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">lunch</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Sandwich"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">lunch</span><span class="o">.</span><span class="nf">isSubset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">[</span><span class="s">"Sandwich"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">]))</span>    <span class="c1">// Prints "false"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">isStrictSubset</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">of</span> <span class="nv">possibleStrictSuperset</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10isSupersetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/isSuperset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10isSupersetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF">isSuperset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func isSuperset(of other: Self) -&gt; Bool</p>
+
+<p>As for isSuperset but using a sequence of Elements rather than another multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">menu</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Sandwich"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">menu</span><span class="o">.</span><span class="nf">isSuperset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">[</span><span class="s">"Sandwich"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Apple"</span><span class="p">]))</span>    <span class="c1">// Prints "true"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">isSuperset</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">of</span> <span class="nv">possibleSubset</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV16isStrictSupersetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/isStrictSuperset(of:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV16isStrictSupersetSbqd__2of_t7ElementQyd__Rszs8SequenceRd__lF">isStrictSuperset(of:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func isStrictSuperset(of other: Self) -&gt; Bool {</p>
+
+<p>As for isStrictSuperset but using a sequence of Elements rather than another multiset.</p>
+
+<p>let menu: Multiset = [<q>Sandwich</q>:3, <q>Apple</q>:2]
+    print(menu.isStrictSuperset(of: [<q>Sandwich</q>, <q>Apple</q>, <q>Apple</q>]))    // Prints <q>true</q></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">isStrictSuperset</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">of</span> <span class="nv">possibleStrictSubset</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV10isDisjointSbqd__4with_t7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/isDisjoint(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV10isDisjointSbqd__4with_t7ElementQyd__Rszs8SequenceRd__lF">isDisjoint(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func isDisjoint(with other: Self) -&gt; Bool</p>
+
+<p>As for isDisjoint but using a sequence of Elements rather than another multiset.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">birds</span><span class="p">:</span> <span class="kt">Multiset</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Duck"</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">birds</span><span class="o">.</span><span class="nf">isDisjoint</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="p">[</span><span class="s">"Not a duck"</span><span class="p">,</span> <span class="s">"Horse"</span><span class="p">]))</span>    <span class="c1">// Prints "true"</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">isDisjoint</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">with</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV5unionAByxGqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/union(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV5unionAByxGqd__7ElementQyd__Rszs8SequenceRd__lF">union(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func union(_ other: Self) -&gt; Self</p>
+
+<p>As for union but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">union</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV12intersectionAByxGqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/intersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV12intersectionAByxGqd__7ElementQyd__Rszs8SequenceRd__lF">intersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func intersection(_ other: Self) -&gt; Self</p>
+
+<p>As for intersection but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">intersection</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV19symmetricDifferenceAByxGqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/symmetricDifference(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV19symmetricDifferenceAByxGqd__7ElementQyd__Rszs8SequenceRd__lF">symmetricDifference(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func symmetricDifference(_ other: Self) -&gt; Self</p>
+
+<p>As for symmetricDifference but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">symmetricDifference</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV11subtractingAByxGqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/subtracting(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV11subtractingAByxGqd__7ElementQyd__Rszs8SequenceRd__lF">subtracting(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: func subtracting(_ other: Self) -&gt; Self</p>
+
+<p>As for subtracting but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">subtracting</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Multiset</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV9formUnionyqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/formUnion(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV9formUnionyqd__7ElementQyd__Rszs8SequenceRd__lF">formUnion(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SEQUENCE VERSION OF: mutating func formUnion(_ other: Self)</p>
+
+<p>As for formUnion but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">formUnion</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV16formIntersectionyqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/formIntersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV16formIntersectionyqd__7ElementQyd__Rszs8SequenceRd__lF">formIntersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>As for formIntersection but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">formIntersection</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV23formSymmetricDifferenceyqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/formSymmetricDifference(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV23formSymmetricDifferenceyqd__7ElementQyd__Rszs8SequenceRd__lF">formSymmetricDifference(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>As for formSymmetricDifference but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">formSymmetricDifference</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8MultisetAAV8subtractyqd__7ElementQyd__Rszs8SequenceRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/subtract(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8MultisetAAV8subtractyqd__7ElementQyd__Rszs8SequenceRd__lF">subtract(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>As for subtract but using a sequence of Elements rather than another multiset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">subtract</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">S</span><span class="p">)</span>
+  <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/Adahus" target="_blank" rel="external">Adahus</a>. All rights reserved. (Last updated: 2018-08-15)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
