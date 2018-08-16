@@ -1,3 +1,4 @@
 # Multiset
 
-Full documentation for Multiset [here]https://adahus.github.io/Multiset/index.html
+Full documentation for Multiset [https://adahus.github.io/Multiset/Structs/Multiset.html]
+
