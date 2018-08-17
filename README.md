@@ -4,7 +4,7 @@ This is a fairly thorough implementation of a Multiset collection.
 Similar to the struct Set in the standard library but can contain more than one of the same element.
 This type is sometimes called a bag.
 
-My development approach was to take a copy of Set.swift from the standard library, replace the underying data structure with a Dictionary of type (Element, Int).
+My development approach was to take a copy of Set.swift from the standard library, replace the underying data structure with a Dictionary of type (Element, Int) and then adjusting existing methods or adding new ones as necessary.
 
 This means it is a fairly thorough implementation in that it has at least the methods of Set.
 
