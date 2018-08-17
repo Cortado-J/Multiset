@@ -19,7 +19,6 @@ I haven't shown any further installation notes.
 It is not as efficient as it could be.
 In particular I haven't checked the complexity of the methods.
 Having said that, many of the methods piggyback on methods from Dictionary.swift so in many cases performance will probably be fine but this may be acceptable but some may not meet the usual requirements of collection complexity.
-In particular I'm aware count is O(n).
-If anyone wants to it would be a good bit of work to first test and document complexity and then improve where necessary.
+
 
 
