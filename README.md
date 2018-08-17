@@ -5,7 +5,7 @@ Similar to the struct Set in the standard library but can contain more than one 
 This type is sometimes called a bag.
 
 ## Documentation
-Full documentation for Multiset [https://adahus.github.io/Multiset/Structs/Multiset.html]
+Full documentation for Multiset at: [https://adahus.github.io/Multiset/Structs/Multiset.html]
 
 ## Installation
 Installaion is merely a matter of adding the file Multiset.swift to your project.
