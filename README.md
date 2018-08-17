@@ -20,7 +20,7 @@ Code is under the MIT License.
 ## Efficiency and complexity
 It is not as efficient as it could be.
 In particular I haven't checked the complexity of the methods.
-Having said that, many of the methods piggyback on methods from Dictionary.swift so in many cases performance will probably be fine but this may be acceptable but some may not meet the usual requirements of collection complexity.
+Having said that, many of the methods piggyback on methods from Dictionary.swift so in many cases performance will probably be fine and this may be acceptable but some may not meet the usual requirements of collection complexity.
 
 ## Development approach
 My development approach was to take a copy of Set.swift from the standard library, replace the underying data structure with a Dictionary of type (Element, Int) and then adjusting existing methods or adding new ones as necessary.
