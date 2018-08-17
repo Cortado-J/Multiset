@@ -11,6 +11,12 @@ Full documentation for Multiset at: [https://adahus.github.io/Multiset/Structs/M
 Installaion is merely a matter of adding the file Multiset.swift to your project.
 I haven't shown any further installation notes. 
 
+## Testing
+A test file is included using Xcode's XCT test routines which tests all methods.
+
+## License
+Code is under the MIT License.
+
 ## Efficiency and complexity
 It is not as efficient as it could be.
 In particular I haven't checked the complexity of the methods.
@@ -24,9 +30,4 @@ This means it is a fairly thorough implementation in that it has at least the me
 I also looked at some other implementations of Multiset.
 In particular, thankyou Rob Rix for approach to Multiset index.
 
-## Testing
-A test file is included using Xcode's XCT test routines which tests all methods.
-
-## License
-Code is under the MIT License.
 
