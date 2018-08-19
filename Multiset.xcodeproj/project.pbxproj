@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BC7970A82121E2C1009B0378 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7970A72121E2C1009B0378 /* main.swift */; };
 		BC7970A92121E303009B0378 /* Multiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DC2212051450048BA4F /* Multiset.swift */; };
+		BC7970AF212A1369009B0378 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = BC7970AE212A1369009B0378 /* LICENSE */; };
 		BC948DC3212051450048BA4F /* Multiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DC2212051450048BA4F /* Multiset.swift */; };
 		BC948DCB212052E60048BA4F /* TestMultiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC948DCA212052E60048BA4F /* TestMultiset.swift */; };
 /* End PBXBuildFile section */
@@ -29,6 +30,7 @@
 		BC7970A72121E2C1009B0378 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		BC7970AB212452FD009B0378 /* LICENSE.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.TXT; sourceTree = "<group>"; };
 		BC7970AC21245700009B0378 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BC7970AE212A1369009B0378 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BC948DB8212050FF0048BA4F /* Multiset */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Multiset; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC948DC2212051450048BA4F /* Multiset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiset.swift; sourceTree = "<group>"; };
 		BC948DC8212052E60048BA4F /* TestMultiset.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestMultiset.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				BC7970AC21245700009B0378 /* README.md */,
+				BC7970AE212A1369009B0378 /* LICENSE */,
 				BC948DBA212050FF0048BA4F /* Multiset */,
 				BC948DC9212052E60048BA4F /* TestMultiset */,
 				BC948DB9212050FF0048BA4F /* Products */,
@@ -170,6 +173,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7970AF212A1369009B0378 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
