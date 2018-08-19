@@ -28,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		BC7970A72121E2C1009B0378 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		BC7970AB212452FD009B0378 /* LICENSE.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.TXT; sourceTree = "<group>"; };
 		BC7970AC21245700009B0378 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BC7970AE212A1369009B0378 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BC948DB8212050FF0048BA4F /* Multiset */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Multiset; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +80,6 @@
 			children = (
 				BC7970A72121E2C1009B0378 /* main.swift */,
 				BC948DC2212051450048BA4F /* Multiset.swift */,
-				BC7970AB212452FD009B0378 /* LICENSE.TXT */,
 			);
 			path = Multiset;
 			sourceTree = "<group>";
