@@ -3,9 +3,6 @@
 This is a fairly thorough implementation of a Multiset collection.
 Similar to the struct Set in the standard library but can contain more than one of the same element.
 This type is sometimes called a bag.
-fSwift Collections Library
-
-Buckets is a complete, tested and documented collections library for swift.
 
 ## Requirements
 Swift 4.2
