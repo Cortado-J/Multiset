@@ -8,7 +8,7 @@ This type is sometimes called a bag.
 Swift 4.2
 
 ## Documentation
-Full documentation for Multiset at: [https://adahus.github.io/Multiset/Structs/Multiset.html]
+Full documentation for Multiset at: [https://cortado-j.github.io/Multiset/Structs/Multiset.html]
 
 ## Installation
 Installaion is merely a matter of adding the file Multiset.swift to your project.
